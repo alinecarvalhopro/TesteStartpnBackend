@@ -1,10 +1,11 @@
 const Playbook = require('../app/models/Playbook');
 const User = require('../app/models/User');
+const Category = require('../app/models/Category'); 
 
 const { Sequelize } = require('sequelize');
 const connectionDatabase = require('../config/database').sequelize;
 
-const models = [User, Playbook]
+const models = [User, Playbook, Category]; 
 
 class Database {
     constructor() {
@@ -20,6 +21,9 @@ class Database {
     associateModels() {
         User.hasMany(Playbook, { foreignKey: 'userId' });
         Playbook.belongsTo(User, { foreignKey: 'userId' });
+
+        Category.hasMany(Playbook, { foreignKey: 'categoryId' });
+        Playbook.belongsTo(Category, { foreignKey: 'categoryId' });
     }
 }
 

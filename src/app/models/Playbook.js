@@ -1,38 +1,38 @@
-const { DataTypes, Model } = require('sequelize');
-const database = require('../../config/database');
-
-class Playbook extends Model {}
-
-Playbook.init(
-  {
+'use strict';
+const { Model } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Playbook extends Model {
+    static associate(models) {
+      Playbook.belongsTo(models.User, { foreignKey: 'userId' });
+      Playbook.belongsTo(models.Category, { foreignKey: 'categoryId' });
+    }
+  }
+  Playbook.init({
     id: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
-      primaryKey: true
+      allowNull: false
     },
-    nome: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    category: {
-      type: DataTypes.STRING,
-      allowNull: false
+    description: {
+      type: DataTypes.STRING
     },
     userId: {
-        type: DataTypes.INTEGER, 
-        allowNull: false,
-        references: {
-          model: 'User', 
-          key: 'id'
-        }
-      }
-  },
-  {
-    sequelize: database, 
-    modelName: 'playbook', 
-    timestamps: false 
-  }
-);
-
-module.exports = Playbook;
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    categoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
+  }, {
+    sequelize,
+    modelName: 'Playbook',
+    timestamps: true
+  });
+  return Playbook;
+};

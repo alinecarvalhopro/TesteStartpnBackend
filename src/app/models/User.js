@@ -1,34 +1,25 @@
-const { DataTypes, Model } = require('sequelize');
-const database = require('../../config/database');
-
-class User extends Model {}
-
-User.init(
-  {
+'use strict';
+const { Model } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class User extends Model {
+    static associate(models) {
+      User.hasMany(models.Playbook, { foreignKey: 'userId' });
+    }
+  }
+  User.init({
     id: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
-      primaryKey: true
-    },
-    nome: {
-      type: DataTypes.STRING,
       allowNull: false
     },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }
-  },
-  {
-    sequelize: database, 
-    modelName: 'user', 
-    timestamps: false 
-  }
-);
-
-module.exports = User;
+    nome: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'User',
+    timestamps: true
+  });
+  return User;
+};
