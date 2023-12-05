@@ -1,30 +1,19 @@
-const Playbook = require('../app/models/Playbook');
-const User = require('../app/models/User');
-const Category = require('../app/models/Category'); 
-
 const { Sequelize } = require('sequelize');
-const connectionDatabase = require('../config/database').sequelize;
+const dbConfig = require('../config/database');
 
-const models = [User, Playbook, Category]; 
+const User = require('../app/models/user');
+
+const models = [User];
 
 class Database {
-    constructor() {
-        this.init();
-        this.associateModels();
-    }
+  constructor() {
+    this.init();
+  }
 
-    init() {
-        this.connection = new Sequelize(connectionDatabase);
-        models.forEach(model => model.init(this.connection));
-    }
-
-    associateModels() {
-        User.hasMany(Playbook, { foreignKey: 'userId' });
-        Playbook.belongsTo(User, { foreignKey: 'userId' });
-
-        Category.hasMany(Playbook, { foreignKey: 'categoryId' });
-        Playbook.belongsTo(Category, { foreignKey: 'categoryId' });
-    }
+  init() {
+    this.connection = new Sequelize(dbConfig);
+    models.map((model) => model.init(this.connection));
+  }
 }
 
-export default Database;
+module.exports = new Database();

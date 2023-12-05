@@ -1,23 +1,26 @@
-const express = require('express')
-const routes = require('./routes')
-const cors = require('cors')
-const compression = require('compression')
-require('./database/index')
+const express = require('express');
+const cors = require('cors');
+const compression = require('compression');
+const routes = require('./routes'); 
+
+require("./database/index");
 
 class App {
     constructor() {
-        this.server = express()
-        this.middlewares()
-        this.routes()
+        this.server = express();
+        this.middlewares();
+        this.routes();
     }
+
     middlewares() {
-        this.server.use(cors())
-        this.server.use(compression())
-        this.server.use(express.json({ limit: '500mb' }))
+        this.server.use(cors());
+        this.server.use(compression());
+        this.server.use(express.json({ limit: '500mb' }));
     }
+
     routes() {
-        this.server.use(routes)
+        this.server.use(routes);
     }
 }
 
-module.exports = new App().server
+module.exports = new App().server;
