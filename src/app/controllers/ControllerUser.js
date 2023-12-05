@@ -61,7 +61,8 @@ class ControllerUser {
             response.status(200).json({ token });
 
         } catch (error) {
-            res.status(500).json({ error: 'Login failed' });
+            console.log(error)
+            response.status(500).json({ error: 'Login failed' });
         }
     }
 }
