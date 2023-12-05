@@ -13,6 +13,7 @@ class ControllerUser {
             const newUser = await User.create({ name, email, password: hashedPassword });
 
             return response.status(201).json(newUser);
+
         } catch (error) {
             console.log(error)
             response.status(500).json({ error: 'Failed to create user' });
@@ -21,14 +22,18 @@ class ControllerUser {
 
     async getUserById(request, response) {
         try {
-            const { userId } = request.params;
-            const user = await User.findByPk(userId);
+            const { id } = request.params;
+            const user = await User.findOne({ where: { id } });
+
             if (user) {
                 response.status(200).json(user);
+
             } else {
                 response.status(404).json({ error: 'User not found' });
             }
+
         } catch (error) {
+            console.log(error)
             return response.status(500).json({ error: 'Internal Server Error' });
         }
     }
@@ -53,6 +58,7 @@ class ControllerUser {
             });
 
             response.status(200).json({ token });
+            
         } catch (error) {
             res.status(500).json({ error: 'Login failed' });
         }
