@@ -28,7 +28,6 @@ class ControllerUser {
             if (user) {
                 const { password, ...userData } = user.toJSON();
                 response.status(200).json(userData);
-                // response.status(200).json(user);
 
             } else {
                 response.status(404).json({ error: 'User not found' });
