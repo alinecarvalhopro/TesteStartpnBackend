@@ -26,7 +26,9 @@ class ControllerUser {
             const user = await User.findOne({ where: { id } });
 
             if (user) {
-                response.status(200).json(user);
+                const { password, ...userData } = user.toJSON();
+                response.status(200).json(userData);
+                // response.status(200).json(user);
 
             } else {
                 response.status(404).json({ error: 'User not found' });
@@ -58,7 +60,7 @@ class ControllerUser {
             });
 
             response.status(200).json({ token });
-            
+
         } catch (error) {
             res.status(500).json({ error: 'Login failed' });
         }
