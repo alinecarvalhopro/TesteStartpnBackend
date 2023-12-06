@@ -10,10 +10,10 @@ class ControllerUser {
             const { name, email, password } = request.body;
 
             const hashedPassword = await bcrypt.hash(password, 10);
-
             const newUser = await User.create({ name, email, password: hashedPassword });
-
-            return response.status(201).json(newUser);
+            const { password: hashedPw, ...userData } = newUser.toJSON();
+    
+            return response.status(201).json(userData);
 
         } catch (error) {
             console.log(error)
