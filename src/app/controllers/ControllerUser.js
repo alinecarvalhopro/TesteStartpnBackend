@@ -12,7 +12,7 @@ class ControllerUser {
             const hashedPassword = await bcrypt.hash(password, 10);
             const newUser = await User.create({ name, email, password: hashedPassword });
             const { password: hashedPw, ...userData } = newUser.toJSON();
-    
+
             return response.status(201).json(userData);
 
         } catch (error) {
@@ -59,7 +59,13 @@ class ControllerUser {
                 expiresIn: '1h'
             });
 
-            response.status(200).json({ token });
+            response.status(200).json({
+                token,
+                user: {
+                    id: user.id,
+                    name: user.name,
+                }
+            });
 
         } catch (error) {
             console.log(error)
