@@ -34,8 +34,8 @@ routes.get('/categories/:id', (request, response) => {
     controllerCategory.getCategoryById(request, response);
 });
 
-routes.get('/categories', (request, response) => {
-    controllerCategory.getAllCategories(request, response);
+routes.get('/users/:userId/categories', (request, response) => {
+    ensureAuthMiddleware, controllerCategory.getCategoriesByUser(request, response);
 });
 
 // Playbooks 
@@ -48,7 +48,7 @@ routes.get('/playbooks/:id', (request, response) => {
 });
 
 routes.get('/users/:userId/playbooks', (request, response) => {
-    controllerPlaybook.getPlaybooksByUser(request, response);
+    ensureAuthMiddleware, controllerPlaybook.getPlaybooksByUser(request, response);
 });
 
 routes.patch('/playbooks/:id', (request, response) => {

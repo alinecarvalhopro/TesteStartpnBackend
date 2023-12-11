@@ -14,7 +14,6 @@ class ControllerPlaybook {
             console.log(error)
             response.status(500).json({ error: 'Failed to create playbook' });
         }
-
     }
 
     async getPlaybookById(request, response) {

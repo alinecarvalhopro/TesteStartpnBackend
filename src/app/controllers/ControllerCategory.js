@@ -4,9 +4,9 @@ class ControllerCategory {
 
     async createCategory(request, response) {
         try {
-            const { name } = request.body;
+            const { name, userId } = request.body;
 
-            const category = await Category.create({ name });
+            const category = await Category.create({ name, userId });
 
             return response.status(201).json(category);
 
@@ -34,16 +34,16 @@ class ControllerCategory {
         }
     }
 
-    async getAllCategories(request, response) {
+    async getCategoriesByUser(request, response) {
         try {
-            const categories = await Category.findAll();
+            const { userId } = request.params;
+            const categories = await Category.findAll({ where: { userId } });
 
             if (categories.length > 0) {
                 response.status(200).json(categories);
             } else {
-                response.status(404).json({ error: 'No categories found' });
+                response.status(404).json({ error: 'No Categories found for this user' });
             }
-
         } catch (error) {
             console.log(error);
             return response.status(500).json({ error: 'Internal Server Error' });

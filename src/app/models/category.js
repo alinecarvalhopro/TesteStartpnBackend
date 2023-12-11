@@ -9,6 +9,7 @@ class Category extends Model {
         autoIncrement: true,
       },
       name: Sequelize.STRING,
+      userId: Sequelize.INTEGER,
     }, {
       sequelize,
     });
